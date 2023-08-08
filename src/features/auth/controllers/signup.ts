@@ -2,11 +2,13 @@ import { ObjectId } from 'mongodb';
 import { Request, Response } from 'express';
 import { joiValidation } from '@global/decorators/joi-validation.decorators';
 import { signupSchema } from '@auth/schemes/signup';
-import { BadRequestError } from '@global/helpers/error-handler';
 import { IAuthDocument, ISignUpData } from '@auth/interfaces/auth.interface';
 import { authService } from '@service/db/auth.service';
+import { BadRequestError } from '@global/helpers/error-handler';
 import { Helpers } from '@global/helpers/helpers';
 import { UploadApiResponse } from 'cloudinary';
+import { uploads } from '@global/helpers/cloudinary-upload';
+import HTTP_STATUS from 'http-status-codes';
 
 export class SignUp {
   @joiValidation(signupSchema)
@@ -32,6 +34,8 @@ export class SignUp {
     if (!result?.public_id) {
       throw new BadRequestError('File upload: Error occured. Try again.');
     }
+
+    res.status(HTTP_STATUS.CREATED).json({ message: 'User created successfully', authData });
   }
 
   private signupData(data: ISignUpData): IAuthDocument {
@@ -44,9 +48,6 @@ export class SignUp {
       password,
       avatarColor,
       createdAt: new Date()
-    } as IAuthDocument;
+    } as unknown as IAuthDocument;
   }
-}
-function uploads(avatarImage: any): UploadApiResponse | PromiseLike<UploadApiResponse> {
-  throw new Error('Function not implemented.');
 }
