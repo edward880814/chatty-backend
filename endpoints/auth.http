@@ -22,7 +22,7 @@ Accept: application/json
 withCredentials: true
 
 {
-  "username": "manny",
+  "username": "danny",
   "password": "qwerty"
 }
 
@@ -32,3 +32,8 @@ Content-Type: application/json
 Accept: application/json
 withCredentials: true
 
+###
+GET {{baseUrl}}/{{urlPath}}/currentuser
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
