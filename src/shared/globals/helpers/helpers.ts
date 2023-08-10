@@ -21,6 +21,7 @@ export class Helpers {
     return parseInt(result, 10);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static parseJson(prop: string): any {
     try {
       JSON.parse(prop);
