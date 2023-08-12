@@ -1,6 +1,6 @@
 import { ServerError } from '@global/helpers/error-handler';
 import Logger from 'bunyan';
-import { BaseCache } from './base.cache';
+import { BaseCache } from '@service/redis/base.cache';
 import { config } from '@root/config';
 import { ISavePostToCache } from '@post/interfaces/post.interface';
 
@@ -79,10 +79,14 @@ export class PostCache extends BaseCache {
       const postCount: string[] = await this.client.HMGET(`users:${currentUserId}`, 'postsCount');
       const multi = this.client.multi();
       multi.ZADD('post', { score: parseInt(uId, 10), value: `${key}` });
-      multi.HSET(`posts:${key}`, dataToSave);
+
+      for (let i = 0; i < dataToSave.length; i += 2) {
+        multi.HSET(`posts:${key}`, dataToSave[i], dataToSave[i + 1]);
+      }
+
       const count: number = parseInt(postCount[0], 10) + 1;
-      multi.HSET(`users:${currentUserId}`, ['postsCount', count]);
-      multi.exec();
+      multi.HSET(`users:${currentUserId}`, 'postsCount', count);
+      await multi.exec();
     } catch (error) {
       log.error(error);
       throw new ServerError('Server error. Try again.');
