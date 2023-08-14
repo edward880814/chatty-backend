@@ -58,9 +58,9 @@ withCredentials: true,
 
 
  {
-  "post": "Post is updated",
+  "post": "Poster",
   "bgColor": "#ffffff",
-  "privacy": "Private",
+  "privacy": "Public",
   "gifUrl": "",
   "profilePicture": "https://res.cloudinary.com/dbymmegbb/image/upload/v1691821354/64d72526812c57978d12235f",
   "feelings": "sad",
