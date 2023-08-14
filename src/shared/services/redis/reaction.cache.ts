@@ -32,7 +32,7 @@ export class ReactionCache extends BaseCache {
         await this.client.LPUSH(`reactions:${key}`, JSON.stringify(reaction));
         const dataToSave: string[] = ['reactions', JSON.stringify(postReactions)];
         for (let i = 0; i < dataToSave.length; i += 2) {
-          await this.client.HSET(`users:${key}`, dataToSave[i], dataToSave[i + 1]);
+          await this.client.HSET(`posts:${key}`, dataToSave[i], dataToSave[i + 1]);
         }
       }
     } catch (error) {
@@ -54,7 +54,7 @@ export class ReactionCache extends BaseCache {
 
       const dataToSave: string[] = ['reactions', JSON.stringify(postReactions)];
       for (let i = 0; i < dataToSave.length; i += 2) {
-        await this.client.HSET(`users:${key}`, dataToSave[i], dataToSave[i + 1]);
+        await this.client.HSET(`posts:${key}`, dataToSave[i], dataToSave[i + 1]);
       }
     } catch (error) {
       log.error(error);
