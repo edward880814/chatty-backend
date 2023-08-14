@@ -1,0 +1,18 @@
+@baseUrl = http://localhost:5000
+@urlPath = api/v1
+
+###
+POST {{baseUrl}}/{{urlPath}}/post/reaction
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "userTo": "64d72526812c57978d12235f",
+  "postId": "64d9cb798d5f2add9f0b465f",
+  "type": "love",
+  "previousReaction": "",
+  "postReactions": {"like": 0,"love": 1,"happy": 0,"sad": 0,"wow": 0,"angry": 0},
+  "profilePicture": "https://res.cloudinary.com/dbymmegbb/image/upload/v1691821354/64d72526812c57978d12235f"
+}
+
