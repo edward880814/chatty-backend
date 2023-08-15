@@ -9,10 +9,10 @@ withCredentials: true
 
 {
   "userTo": "64d9d873a909c4b3ffe82d55",
-  "postId": "64d9d886a909c4b3ffe82d5c",
-  "type": "happy",
-  "previousReaction": "love",
-  "postReactions": {"like": 0,"love": 0,"happy": 1,"sad": 0,"wow": 0,"angry": 0},
+  "postId": "64db11ebc8ddecd870c90c31",
+  "type": "sad",
+  "previousReaction": "happy",
+  "postReactions": {"like": 0,"love": 0,"happy": 0,"sad": 1,"wow": 0,"angry": 0},
   "profilePicture": "https://res.cloudinary.com/dbymmegbb/image/upload/v1691998326/64d9d873a909c4b3ffe82d55"
 }
 
