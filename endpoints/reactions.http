@@ -11,7 +11,7 @@ withCredentials: true
   "userTo": "64d9d873a909c4b3ffe82d55",
   "postId": "64db11ebc8ddecd870c90c31",
   "type": "sad",
-  "previousReaction": "happy",
+  "previousReaction": "",
   "postReactions": {"like": 0,"love": 0,"happy": 0,"sad": 1,"wow": 0,"angry": 0},
   "profilePicture": "https://res.cloudinary.com/dbymmegbb/image/upload/v1691998326/64d9d873a909c4b3ffe82d55"
 }
@@ -23,3 +23,21 @@ Accept: application/json
 withCredentials: true
 
 {}
+
+###
+GET {{baseUrl}}/{{urlPath}}/post/reactions/64db11ebc8ddecd870c90c31
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+GET {{baseUrl}}/{{urlPath}}/post/single/reaction/username/Danny/64db11ebc8ddecd870c90c31
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+GET {{baseUrl}}/{{urlPath}}/post/reactions/username/Danny
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
