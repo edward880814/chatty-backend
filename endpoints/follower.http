@@ -23,10 +23,22 @@ Content-Type: application/json
 Accept: application/json
 withCredentials: true
 
+###
+GET {{baseUrl}}/{{urlPath}}/user/followers/64ddb44d13216174664ab039
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+PUT {{baseUrl}}/{{urlPath}}/user/block/64ddb44d13216174664ab039
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
 {}
 
 ###
-GET {{baseUrl}}/{{urlPath}}/user/followers/64ddb44d13216174664ab039
+PUT {{baseUrl}}/{{urlPath}}/user/unblock/64ddb44d13216174664ab039
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
