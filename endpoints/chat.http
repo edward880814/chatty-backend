@@ -58,3 +58,16 @@ withCredentials: true
   "senderId": "64ddb42413216174664ab032",
   "receiverId": "64ddb45d13216174664ab040"
 }
+
+###
+PUT {{baseUrl}}/{{urlPath}}/chat/message/reaction
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "conversationId": "64e0ea714a9692891a129004",
+  "messageId": "64e0fb15ee34c15c47a23a98",
+  "reaction": "sad",
+  "type": "remove"
+}
