@@ -1,0 +1,73 @@
+@baseUrl = http://localhost:5000
+@urlPath = api/v1
+
+###
+POST {{baseUrl}}/{{urlPath}}/chat/message
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "conversationId": "64e0ea714a9692891a129004",
+  "receiverId": "64ddb45d13216174664ab040",
+  "receiverUsername": "Ranny",
+  "receiverAvatarColor": "red",
+  "receiverProfilePicture": "https://res.cloudinary.com/dbymmegbb/image/upload/v1692251237/64ddb45d13216174664ab040",
+  "body": "Hey YO.",
+  "gifUrl": "",
+  "isRead": true,
+  "selectedImage": ""
+}
+
+###
+POST {{baseUrl}}/{{urlPath}}/chat/message/add-chat-users
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "userOne": "64ddb42413216174664ab032",
+  "userTwo": "64ddb45d13216174664ab040"
+}
+
+###
+GET {{baseUrl}}/{{urlPath}}/chat/message/conversation-list
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+GET {{baseUrl}}/{{urlPath}}/chat/message/user/64ddb45d13216174664ab040
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+DELETE {{baseUrl}}/{{urlPath}}/chat/message/mark-as-deleted/64e0f36b3e7ec686d7638db1/64ddb42413216174664ab032/64ddb45d13216174664ab040/deleteForEveryone
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+PUT {{baseUrl}}/{{urlPath}}/chat/message/mark-as-read
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "senderId": "64ddb42413216174664ab032",
+  "receiverId": "64ddb45d13216174664ab040"
+}
+
+###
+PUT {{baseUrl}}/{{urlPath}}/chat/message/reaction
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "conversationId": "64e0ea714a9692891a129004",
+  "messageId": "64e0fb15ee34c15c47a23a98",
+  "reaction": "sad",
+  "type": "remove"
+}
