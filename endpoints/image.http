@@ -20,3 +20,16 @@ withCredentials: true
 {
   "image": "https://res.cloudinary.com/dbymmegbb/image/upload/v1692251180/64ddb42413216174664ab032"
 }
+
+###
+DELETE {{baseUrl}}/{{urlPath}}/images/64e089bd639124c7dc766eb4
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+DELETE {{baseUrl}}/{{urlPath}}/images/background/64ddb42413216174664ab032
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
