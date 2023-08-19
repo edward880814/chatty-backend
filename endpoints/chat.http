@@ -18,3 +18,14 @@ withCredentials: true
   "isRead": true,
   "selectedImage": ""
 }
+
+###
+POST {{baseUrl}}/{{urlPath}}/chat/message/add-chat-users
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "userOne": "64ddb42413216174664ab032",
+  "userTwo": "64ddb45d13216174664ab040"
+}
