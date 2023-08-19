@@ -33,3 +33,8 @@ Content-Type: application/json
 Accept: application/json
 withCredentials: true
 
+###
+GET {{baseUrl}}/{{urlPath}}/images/64ddb42413216174664ab032
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
