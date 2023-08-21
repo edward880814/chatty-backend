@@ -132,11 +132,13 @@ export class UserCache extends BaseCache {
       if (!this.client.isOpen) {
         await this.client.connect();
       }
-      const response: string[] = await this.client.ZRANGE('user', start, end, { REV: true });
+      const response: string[] = await this.client.ZRANGE('user', start, end);
       const multi: ReturnType<typeof this.client.multi> = this.client.multi();
       for (const key of response) {
         if (key !== excludedUserKey) {
-          multi.HGETALL(`users:${key}`);
+          for (let i = response.length - 1; i >= 0; i--) {
+            multi.HGETALL(`users:${key}`);
+          }
         }
       }
       const replies: UserCacheMultiType = (await multi.exec()) as UserCacheMultiType;
