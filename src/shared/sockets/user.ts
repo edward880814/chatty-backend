@@ -17,6 +17,8 @@ export class SocketIOUserHandler {
     this.io.on('connection', (socket: Socket) => {
       socket.on('setup', (data: ILogin) => {
         this.addClientToMap(data.userId, socket.id);
+        this.addUser(data.userId);
+        this.io.emit('user online', users);
       });
       socket.on('block user', (data: ISocketData) => {
         this.io.emit('blocked user id', data);
@@ -44,7 +46,17 @@ export class SocketIOUserHandler {
         return user[1] === socketId;
       }) as [string, string];
       connectedUsersMap.delete(disconnectedUser[0]);
-      // send event to the client
+      this.removeUser(disconnectedUser[0]);
+      this.io.emit('user online', users);
     }
+  }
+
+  private addUser(username: string): void {
+    users.push(username);
+    users = [...new Set(users)];
+  }
+
+  private removeUser(username: string): void {
+    users = users.filter((name: string) => name != username);
   }
 }
