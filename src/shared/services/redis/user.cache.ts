@@ -134,11 +134,10 @@ export class UserCache extends BaseCache {
       }
       const response: string[] = await this.client.ZRANGE('user', start, end);
       const multi: ReturnType<typeof this.client.multi> = this.client.multi();
-      for (const key of response) {
+      const reverseResponse = response.reverse();
+      for (const key of reverseResponse) {
         if (key !== excludedUserKey) {
-          for (let i = response.length - 1; i >= 0; i--) {
-            multi.HGETALL(`users:${key}`);
-          }
+          multi.HGETALL(`users:${key}`);
         }
       }
       const replies: UserCacheMultiType = (await multi.exec()) as UserCacheMultiType;
@@ -173,6 +172,19 @@ export class UserCache extends BaseCache {
       await this.client.HSET(`users:${userId}`, `${prop}`, JSON.stringify(value));
       const response: IUserDocument = (await this.getUserFromCache(userId)) as IUserDocument;
       return response;
+    } catch (error) {
+      log.error(error);
+      throw new ServerError('Server error. Try again.');
+    }
+  }
+
+  public async getTotalUsersInCache(): Promise<number> {
+    try {
+      if (!this.client.isOpen) {
+        await this.client.connect();
+      }
+      const count: number = await this.client.ZCARD('user');
+      return count;
     } catch (error) {
       log.error(error);
       throw new ServerError('Server error. Try again.');
