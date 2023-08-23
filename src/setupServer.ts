@@ -10,6 +10,7 @@ import { Server } from 'socket.io';
 import { createClient } from 'redis';
 import { createAdapter } from '@socket.io/redis-adapter';
 import Logger from 'bunyan';
+import apiStats from 'swagger-stats';
 import 'express-async-errors';
 import { config } from '@root/config';
 import applicationRoutes from '@root/routes';
@@ -35,6 +36,7 @@ export class ChattyServer {
     this.securityMiddleware(this.app);
     this.standardMiddleware(this.app);
     this.routesMiddleware(this.app);
+    this.apiMonitoring(this.app);
     this.globalErrorHandler(this.app);
     this.startServer(this.app);
   }
@@ -68,6 +70,14 @@ export class ChattyServer {
 
   private routesMiddleware(app: Application): void {
     applicationRoutes(app);
+  }
+
+  private apiMonitoring(app: Application): void {
+    app.use(
+      apiStats.getMiddleware({
+        uriPath: '/api-monitoring'
+      })
+    );
   }
 
   private globalErrorHandler(app: Application): void {
