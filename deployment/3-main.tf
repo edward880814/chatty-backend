@@ -2,7 +2,7 @@ terraform {
   backend "s3" {
     bucket  = "edward-chatty-app-terraform-state"
     key     = "develop/chatapp.tfstate"
-    region  = var.aws_region
+    region  = "us-east-1"
     encrypt = true
   }
 }
