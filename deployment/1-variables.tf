@@ -37,7 +37,7 @@ variable "global_destination_cidr_block" {
 variable "bastion_host_cidr" {
   description = "CIDR Block for Bastion Host Ingress"
   type        = string
-  default     = "0.0.0.0/0"
+  default     = "0.0.0.0/0" //寫當下的ip address
 }
 
 variable "https_ssl_policy" {

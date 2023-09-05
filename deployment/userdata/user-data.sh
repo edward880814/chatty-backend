@@ -8,10 +8,16 @@ function program_is_installed {
 }
 
 sudo yum update -y
+sudo yum install ruby -y
+sudo yum install wget -y
+cd /home/ec2-user
+wget https://aws-codedeploy-us-east-1.s3.us-east-1.amazonaws.com/latest/install
+sudo chmod +x ./install
+sudo ./install auto
 
 # Check if NodeJs is installed. If not, install it
 if [ $(program_is_installed node) == 0 ]; then
-  curl -fsSL https://rpm.nodesource.com/setup_lts.x | sudo bash -
+  curl -fsSL https://rpm.nodesource.com/setup_17.x | sudo bash -
   sudo yum install -y nodejs
 fi
 

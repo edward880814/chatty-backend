@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production pm2 start ./build/src/app.js -i 5 --attach --watch | bunyan",
+    "start": "cross-env NODE_ENV=production pm2 start ./build/src/app.js -i 5 --watch | bunyan",
     "stop": "pm2 stop all",
     "delete": "pm2 delete all",
     "dev": "nodemon -r tsconfig-paths/register src/app.ts | bunyan",
@@ -38,6 +38,7 @@
     "compression": "^1.7.4",
     "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
+    "dos2unix": "^1.1.2",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
