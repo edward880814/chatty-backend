@@ -175,6 +175,8 @@ jobs:
     steps:
       - checkout
       - *show-current-branch-name
+      - aws-cli/setup:
+          profile-name: default
       - run:
           name: Terraform plan
           command: |
@@ -194,6 +196,8 @@ jobs:
     executor: aws-cli/default
     steps:
       - checkout
+      - aws-cli/setup:
+          profile-name: default
       - *zip-project
       - run:
           name: Upload project to S3
