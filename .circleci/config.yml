@@ -114,7 +114,6 @@ jobs:
       - *restore-cache
       - *install-dependencies
       - *save-cache
-      - *notify-on-fail
 
   linting:
     executor: app-executor
@@ -125,7 +124,7 @@ jobs:
       - run:
           name: Run linting
           command: npm run lint:check
-            - *notify-on-fail
+      - *notify-on-fail
 
   code-formatter-check:
     executor: app-executor
@@ -136,7 +135,7 @@ jobs:
       - run:
           name: Run prettier check
           command: npm run prettier:check
-            - *notify-on-fail
+      - *notify-on-fail
 
   unit-test:
     executor: app-executor
@@ -155,17 +154,6 @@ jobs:
             sleep 3
             npm run test
       - codecov/upload
-      - *notify-on-fail
-
-  upload-project-to-s3:
-    executor: aws-cli/default
-    steps:
-      - checkout
-      - *zip-project
-      - run:
-          name: Upload project to S3
-          command: |
-            aws --region us-east-1 s3 cp chatapp.zip s3://chatapp-server-${CIRCLE_BRANCH}-edward-project-app
       - *notify-on-fail
 
   terraform-validate:
@@ -200,6 +188,17 @@ jobs:
             cd deployment/
             terraform workspace select ${CIRCLE_BRANCH}
             terraform apply -auto-approve
+      - *notify-on-fail
+
+  upload-project-to-s3:
+    executor: aws-cli/default
+    steps:
+      - checkout
+      - *zip-project
+      - run:
+          name: Upload project to S3
+          command: |
+            aws --region us-east-1 s3 cp chatapp.zip s3://chatapp-server-${CIRCLE_BRANCH}-edward-project-app
       - *notify-on-fail
 
   push-to-aws-code-deploy:
