@@ -1,40 +1,62 @@
 import { Request, Response } from 'express';
-import HTTP_STATUS from 'http-status-codes';
-import { ICommentDocument, ICommentNameList } from '@comment/interfaces/comment.interface';
+import { authUserPayload } from '@root/mocks/auth.mock';
+import { reactionMockRequest, reactionMockResponse } from '@root/mocks/reactions.mock';
 import { CommentCache } from '@service/redis/comment.cache';
-import { commentService } from '@service/db/comment.service';
-import mongoose from 'mongoose';
+import { commentQueue } from '@service/queues/comment.queue';
+import { Add } from '@comment/controllers/add-comment';
+import { existingUser } from '@root/mocks/user.mock';
 
-const commentCache: CommentCache = new CommentCache();
+jest.useFakeTimers();
+jest.mock('@service/queues/base.queue');
+jest.mock('@service/redis/comment.cache');
 
-export class Get {
-  public async comments(req: Request, res: Response): Promise<void> {
-    const { postId } = req.params;
-    const cachedComments: ICommentDocument[] = await commentCache.getCommentsFromCache(postId);
-    const comments: ICommentDocument[] = cachedComments.length
-      ? cachedComments
-      : await commentService.getPostComments({ postId: new mongoose.Types.ObjectId(postId) }, { createdAt: -1 });
+describe('Add', () => {
+  beforeEach(() => {
+    jest.restoreAllMocks();
+  });
 
-    res.status(HTTP_STATUS.OK).json({ message: 'Post comments', comments });
-  }
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.clearAllTimers();
+  });
 
-  public async commentsNamesFromCache(req: Request, res: Response): Promise<void> {
-    const { postId } = req.params;
-    const cachedCommentsNames: ICommentNameList[] = await commentCache.getCommentsNamesFromCache(postId);
-    const commentsNames: ICommentNameList[] = cachedCommentsNames.length
-      ? cachedCommentsNames
-      : await commentService.getPostCommentNames({ postId: new mongoose.Types.ObjectId(postId) }, { createdAt: -1 });
+  it('should call savePostCommentToCache and addCommentJob methods', async () => {
+    const req: Request = reactionMockRequest(
+      {},
+      {
+        postId: '6027f77087c9d9ccb1555268',
+        comment: 'This is a comment',
+        profilePicture: 'https://place-hold.it/500x500',
+        userTo: `${existingUser._id}`
+      },
+      authUserPayload
+    ) as Request;
+    const res: Response = reactionMockResponse();
+    jest.spyOn(CommentCache.prototype, 'savePostCommentToCache');
+    jest.spyOn(commentQueue, 'addCommentJob');
 
-    res.status(HTTP_STATUS.OK).json({ message: 'Post comments names', comments: commentsNames });
-  }
+    await Add.prototype.comment(req, res);
+    expect(CommentCache.prototype.savePostCommentToCache).toHaveBeenCalled();
+    expect(commentQueue.addCommentJob).toHaveBeenCalled();
+  });
 
-  public async singleComment(req: Request, res: Response): Promise<void> {
-    const { postId, commentId } = req.params;
-    const cachedComments: ICommentDocument[] = await commentCache.getSingleCommentFromCache(postId, commentId);
-    const comments: ICommentDocument[] = cachedComments.length
-      ? cachedComments
-      : await commentService.getPostComments({ _id: new mongoose.Types.ObjectId(commentId) }, { createdAt: -1 });
+  it('should send correct json response', async () => {
+    const req: Request = reactionMockRequest(
+      {},
+      {
+        postId: '6027f77087c9d9ccb1555268',
+        comment: 'This is a comment',
+        profilePicture: 'https://place-hold.it/500x500',
+        userTo: `${existingUser._id}`
+      },
+      authUserPayload
+    ) as Request;
+    const res: Response = reactionMockResponse();
 
-    res.status(HTTP_STATUS.OK).json({ message: 'Single comment', comments: comments[0] });
-  }
-}
+    await Add.prototype.comment(req, res);
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      message: 'Comment created successfully'
+    });
+  });
+});

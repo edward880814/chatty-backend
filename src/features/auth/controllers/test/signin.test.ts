@@ -5,6 +5,8 @@ import { CustomError } from '@global/helpers/error-handler';
 import { SignIn } from '@auth/controllers/signin';
 import { Helpers } from '@global/helpers/helpers';
 import { authService } from '@service/db/auth.service';
+import { userService } from '@service/db/user.service';
+import { mergedAuthAndUserData } from '@root/mocks/user.mock';
 
 const USERNAME = 'Manny';
 const PASSWORD = 'manny1';
@@ -109,13 +111,14 @@ describe('SignIn', () => {
     const res: Response = authMockResponse();
     authMock.comparePassword = () => Promise.resolve(true);
     jest.spyOn(authService, 'getAuthUserByUsername').mockResolvedValue(authMock);
+    jest.spyOn(userService, 'getUserByAuthId').mockResolvedValue(mergedAuthAndUserData);
 
     await SignIn.prototype.read(req, res);
     expect(req.session?.jwt).toBeDefined();
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({
       message: 'User login successfully',
-      user: authMock,
+      user: mergedAuthAndUserData,
       token: req.session?.jwt
     });
   });
