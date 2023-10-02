@@ -100,6 +100,9 @@ export class ChattyServer {
     }
     try {
       const httpServer: http.Server = new http.Server(app);
+
+      httpServer.keepAliveTimeout = 65000;
+
       const socketIO: Server = await this.createSocketIO(httpServer);
       this.startHttpServer(httpServer);
       this.socketIOConnections(socketIO);
