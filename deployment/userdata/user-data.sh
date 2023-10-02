@@ -17,7 +17,7 @@ sudo ./install auto
 
 # Check if NodeJs is installed. If not, install it
 if [ $(program_is_installed node) == 0 ]; then
-  curl -fsSL https://rpm.nodesource.com/setup_17.x | sudo bash -
+  curl -fsSL https://rpm.nodesource.com/setup_lts.x | sudo bash -
   sudo yum install -y nodejs
 fi
 
