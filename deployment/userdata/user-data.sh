@@ -19,7 +19,7 @@ if [ $(program_is_installed node) == 0 ]; then
   sudo gpg --dearmor -o /etc/pki/rpm-gpg/nodesource.gpg < nodesource.gpg
 
   # Set the desired Node.js version (change NODE_MAJOR as needed)
-  NODE_MAJOR=20
+  NODE_MAJOR=16
 
   # Download the setup script
   sudo curl -fsSL https://rpm.nodesource.com/setup_$NODE_MAJOR.x -o nodesource_setup.sh
