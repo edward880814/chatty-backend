@@ -7,6 +7,10 @@ function program_is_installed {
   echo "$return_"
 }
 
+if ! grep -q "epel" /etc/yum.repos.d/epel.repo; then
+  sudo amazon-linux-extras enable epel -y
+fi
+
 # Update the system and install required dependencies
 sudo yum update -y
 sudo yum install -y ca-certificates curl
