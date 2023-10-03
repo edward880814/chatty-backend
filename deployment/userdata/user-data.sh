@@ -7,26 +7,35 @@ function program_is_installed {
   echo "$return_"
 }
 
+# Update the system and install required dependencies
 sudo yum update -y
+sudo yum install -y ca-certificates curl
+
+# Check if NodeJs is installed. If not, install it manually
+if [ $(program_is_installed node) == 0 ]; then
+  # Download and import the NodeSource GPG key
+  sudo mkdir -p /etc/pki/rpm-gpg
+  sudo curl -fsSL https://rpm.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/pki/rpm-gpg/nodesource.gpg
+
+  # Set the desired Node.js version (change NODE_MAJOR as needed)
+  NODE_MAJOR=20
+
+  # Download the setup script
+  sudo curl -fsSL https://rpm.nodesource.com/setup_$NODE_MAJOR.x -o nodesource_setup.sh
+
+  # Run the setup script
+  sudo bash nodesource_setup.sh
+
+  # Install Node.js
+  sudo yum install -y nodejs
+fi
+
 sudo yum install ruby -y
 sudo yum install wget -y
 cd /home/ec2-user
 wget https://aws-codedeploy-us-east-1.s3.us-east-1.amazonaws.com/latest/install
 sudo chmod +x ./install
 sudo ./install auto
-
-# Check if NodeJs is installed. If not, install it
-if [ $(program_is_installed node) == 0 ]; then
-  # Download and import the NodeSource GPG key
-  sudo yum install -y ca-certificates curl
-  sudo mkdir -p /etc/pki/rpm-gpg
-  sudo curl -fsSL https://rpm.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/pki/rpm-gpg/nodesource.gpg
-
-  # Set the desired Node.js version (change NODE_MAJOR as needed)
-  NODE_MAJOR=20
-  sudo curl -fsSL https://rpm.nodesource.com/setup_$NODE_MAJOR.x | sudo bash -
-  sudo yum install -y nodejs
-fi
 
 if [ $(program_is_installed git) == 0 ]; then
   sudo yum install git -y
