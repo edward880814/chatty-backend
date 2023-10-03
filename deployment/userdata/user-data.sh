@@ -17,7 +17,14 @@ sudo ./install auto
 
 # Check if NodeJs is installed. If not, install it
 if [ $(program_is_installed node) == 0 ]; then
-  curl -fsSL https://rpm.nodesource.com/setup_lts.x | sudo bash -
+  # Download and import the NodeSource GPG key
+  sudo yum install -y ca-certificates curl
+  sudo mkdir -p /etc/pki/rpm-gpg
+  sudo curl -fsSL https://rpm.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/pki/rpm-gpg/nodesource.gpg
+
+  # Set the desired Node.js version (change NODE_MAJOR as needed)
+  NODE_MAJOR=20
+  sudo curl -fsSL https://rpm.nodesource.com/setup_$NODE_MAJOR.x | sudo bash -
   sudo yum install -y nodejs
 fi
 
