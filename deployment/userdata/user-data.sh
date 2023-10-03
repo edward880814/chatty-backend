@@ -7,10 +7,6 @@ function program_is_installed {
   echo "$return_"
 }
 
-if ! grep -q "epel" /etc/yum.repos.d/epel.repo; then
-  sudo amazon-linux-extras enable epel -y
-fi
-
 # Update the system and install required dependencies
 sudo yum update -y
 sudo yum install -y ca-certificates curl
@@ -19,7 +15,8 @@ sudo yum install -y ca-certificates curl
 if [ $(program_is_installed node) == 0 ]; then
   # Download and import the NodeSource GPG key
   sudo mkdir -p /etc/pki/rpm-gpg
-  sudo curl -fsSL https://rpm.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/pki/rpm-gpg/nodesource.gpg
+  sudo curl -fsSL -o nodesource.gpg https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+  sudo gpg --dearmor -o /etc/pki/rpm-gpg/nodesource.gpg < nodesource.gpg
 
   # Set the desired Node.js version (change NODE_MAJOR as needed)
   NODE_MAJOR=20
