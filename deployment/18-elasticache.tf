@@ -9,8 +9,8 @@ resource "aws_elasticache_replication_group" "chatapp_redis_cluster" {
   automatic_failover_enabled    = true
   replication_group_id          = "${local.prefix}-redis"
   node_type                     = var.elasticache_node_type
-  description = "Redis elasticache replication group"
-  num_cache_clusters         = 2
+  replication_group_description = "Redis elasticache replication group"
+  number_cache_clusters         = 2
   parameter_group_name          = var.elasticache_parameter_group_name
   port                          = 6379
   multi_az_enabled              = true
