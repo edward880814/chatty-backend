@@ -17,7 +17,12 @@ const userCache: UserCache = new UserCache();
 export class Add {
   @joiValidation(addImageSchema)
   public async profileImage(req: Request, res: Response): Promise<void> {
-    const result: UploadApiResponse = (await uploads(req.body.image, req.currentUser!.userId, true, true)) as UploadApiResponse;
+    let { image } = req.body;
+    if (/^data:\/[^/]/.test(image)) {
+      image = image.replace(/^data:\/([^/])/, 'data:$1');
+    }
+
+    const result: UploadApiResponse = (await uploads(image, req.currentUser!.userId, true, true)) as UploadApiResponse;
     if (!result?.public_id) {
       throw new BadRequestError('File upload: Error occurred. Try again.');
     }
