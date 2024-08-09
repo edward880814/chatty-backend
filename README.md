@@ -65,24 +65,6 @@ Chatty App backend server is an interesting real-time social network application
 
 You'll need to copy the contents of `.env.development.example`, add to `.env` file and update with the necessary information.
 
-## Local Installation
-
-- There are three different branches develop, staging and main. The develop branch is the default branch.
-
-```bash
-git clone -b develop https://github.com/uzochukwueddie/chatty-backend.git
-cd chatty-backend
-npm install
-```
-
-- To start the server after installation, run
-
-```bash
-npm run dev
-```
-
-Make sure mongodb and redis are both running on your local machine.
-
 ## Unit tests
 
 - You can run the command `npm run test` to execute the unit tests added to the features controllers.
