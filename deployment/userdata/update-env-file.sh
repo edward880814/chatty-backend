@@ -1,5 +1,6 @@
 #!/bin/bash
 
+##這一段如果在本地跑terraform apply -auto-approve 的話記得要註解掉
 function program_is_installed {
   local return_=1
 

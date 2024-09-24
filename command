@@ -5,3 +5,6 @@ aws deploy create-deployment \
     --deployment-group-name chatapp-server-default-group \
     --file-exists-behavior "OVERWRITE" \
     --s3-location bucket=chatapp-server-default-edward-project-app,bundleType=zip,key=chatapp.zip
+
+//把整個檔案zip下來的指令
+zip chatapp.zip -r .
