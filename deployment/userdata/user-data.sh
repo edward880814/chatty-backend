@@ -40,7 +40,7 @@ cd /home/ec2-user
 git clone -b staging https://github.com/edward880814/chatty-backend.git
 cd chatty-backend
 npm install
-aws s3 sync s3://edward-chattyapp-env-files/staging .
+aws s3 sync s3://edward-chattyapp-env-files/backend/staging .
 unzip env-file.zip
 cp .env.staging .env
 npm run build
