@@ -1,6 +1,6 @@
 #!/bin/bash
 
-aws s3 sync s3://edward-chattyapp-env-files/production .
+aws s3 sync s3://edward-chattyapp-env-files/backend/production .
 unzip env-file.zip
 cp .env.production .env
 rm .env.production
@@ -10,6 +10,6 @@ sed -i -E "s|^REDIS_HOST = .+|REDIS_HOST = redis://$ELASTICACHE_ENDPOINT:6379|g"
 rm -rf env-file.zip
 cp .env .env.production
 zip env-file.zip .env.production
-aws --region us-east-1 s3 cp env-file.zip s3://edward-chattyapp-env-files/production/
+aws --region us-east-1 s3 cp env-file.zip s3://edward-chattyapp-env-files/backend/production/
 rm -rf .env*
 rm -rf env-file.zip
