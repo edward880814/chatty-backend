@@ -49,7 +49,7 @@ export class ChattyServer {
         keys: [config.SECRET_KEY_ONE!, config.SECRET_KEY_TWO!],
         maxAge: 24 * 7 * 3600000,
         secure: config.NODE_ENV !== 'development',
-        sameSite: 'none', //在local的時候這一段要註解掉
+        sameSite: 'none' //在local的時候這一段要註解掉
       })
     );
     app.use(hpp());
