@@ -42,7 +42,6 @@ export class ChattyServer {
   }
 
   private securityMiddleware(app: Application): void {
-    app.set('trust proxxy', 1);
     app.use(
       cookieSession({
         name: 'session',
