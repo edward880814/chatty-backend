@@ -48,7 +48,8 @@ export class ChattyServer {
         name: 'session',
         keys: [config.SECRET_KEY_ONE!, config.SECRET_KEY_TWO!],
         maxAge: 24 * 7 * 3600000,
-        secure: config.NODE_ENV !== 'development',
+        secure: true,
+        // secure: config.NODE_ENV !== 'development',
         sameSite: 'none' //在local的時候這一段要註解掉
       })
     );
@@ -56,7 +57,7 @@ export class ChattyServer {
     app.use(helmet());
     app.use(
       cors({
-        origin: config.CLIENT_URL,
+        origin: "https://dev.kuanproject.site",
         credentials: true,
         optionsSuccessStatus: 200,
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
