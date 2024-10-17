@@ -10,7 +10,7 @@ const userCache: UserCache = new UserCache();
 export class CurrentUser {
   public async read(req: Request, res: Response): Promise<void> {
     console.log(config.NODE_ENV);
-    console.log(config.CLIENT_URL)
+    console.log(config.CLIENT_URL);
     let isUser = false;
     let token = null;
     let user = null;
