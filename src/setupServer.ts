@@ -42,6 +42,7 @@ export class ChattyServer {
   }
 
   private securityMiddleware(app: Application): void {
+    app.set('trust proxy', true)
     app.use(
       cookieSession({
         name: 'session',
@@ -56,7 +57,7 @@ export class ChattyServer {
     app.use(helmet());
     app.use(
       cors({
-        origin: "https://dev.kuanproject.site",
+        origin: 'https://dev.kuanproject.site',
         credentials: true,
         optionsSuccessStatus: 200,
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
