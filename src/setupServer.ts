@@ -48,15 +48,16 @@ export class ChattyServer {
         name: 'session',
         keys: [config.SECRET_KEY_ONE!, config.SECRET_KEY_TWO!],
         maxAge: 24 * 7 * 3600000,
-        secure: true,
+        secure: config.NODE_ENV !== 'development',
         sameSite: 'lax'
       })
     );
     app.use(hpp());
     app.use(helmet());
+    console.log(config.CLIENT_URL);
     app.use(
       cors({
-        origin: 'https://dev.kuanproject.site',
+        origin: config.CLIENT_URL,
         credentials: true,
         optionsSuccessStatus: 200,
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
