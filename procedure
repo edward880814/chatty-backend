@@ -1,0 +1,5 @@
+我想要把circleci的流程拿掉，太多不可預期的問題了，可能使用別的CI的工具就好
+流程
+1. zip env-file.zip .env.develop(壓縮檔案der指令)
+2. aws --region us-east-1 s3 cp env-file.zip s3://edward-chattyapp-env-files/backend/develop/   (上傳到aws s3的指令)
+3. terraform apply -auto-approve，完成

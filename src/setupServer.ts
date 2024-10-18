@@ -42,19 +42,21 @@ export class ChattyServer {
   }
 
   private securityMiddleware(app: Application): void {
+    app.set('trust proxy', true);
     app.use(
       cookieSession({
         name: 'session',
         keys: [config.SECRET_KEY_ONE!, config.SECRET_KEY_TWO!],
         maxAge: 24 * 7 * 3600000,
-        secure: config.NODE_ENV !== 'development'
+        secure: true,
+        sameSite: 'lax'
       })
     );
     app.use(hpp());
     app.use(helmet());
     app.use(
       cors({
-        origin: config.CLIENT_URL,
+        origin: 'https://dev.kuanproject.site',
         credentials: true,
         optionsSuccessStatus: 200,
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
