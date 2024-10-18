@@ -3,11 +3,14 @@ import { UserCache } from '@service/redis/user.cache';
 import { IUserDocument } from '@user/interfaces/user.interface';
 import { userService } from '@service/db/user.service';
 import HTTP_STATUS from 'http-status-codes';
+import { config } from '@root/config';
 
 const userCache: UserCache = new UserCache();
 
 export class CurrentUser {
   public async read(req: Request, res: Response): Promise<void> {
+    console.log(config.NODE_ENV);
+    console.log(config.CLIENT_URL);
     let isUser = false;
     let token = null;
     let user = null;
